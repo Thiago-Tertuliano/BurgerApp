@@ -8,7 +8,7 @@ Sistema completo de pedidos para hamburgueria desenvolvido com **frontend em Vue
 
 ```
 ┌─────────────────┐    HTTP/JSON    ┌─────────────────┐
-│   Frontend      │ ◄──────────────► │    Backend      │
+│   Frontend      │ ◄──────────────►│    Backend      │
 │   Vue.js 3      │                 │   Go + Gin      │
 │   (Porta 5173)  │                 │  (Porta 8080)   │
 └─────────────────┘                 └─────────────────┘
