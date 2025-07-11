@@ -410,35 +410,12 @@ r.Use(gin.Recovery())
 - Escreva testes quando possível
 - Documente funções públicas
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ## 👥 Autores
 
-- **Desenvolvedor**: [Seu Nome]
-- **Data**: 2024
+- **Desenvolvedor**: Thiago Matos Tertuliano
+- **Data**: Julho 2025
 - **Versão**: 1.0.0
-
----
-
-## 🎯 Próximos Passos
-
-### Melhorias Planejadas
-- [ ] Autenticação JWT completa
-- [ ] Middleware de logging
-- [ ] Cache com Redis
-- [ ] Rate limiting
-- [ ] Documentação Swagger
-- [ ] Testes automatizados
-- [ ] CI/CD pipeline
-
-### Recursos Técnicos
-- [ ] Migrations com golang-migrate
-- [ ] Validação com go-playground/validator
-- [ ] Logging estruturado
-- [ ] Métricas com Prometheus
-- [ ] Health checks avançados
 
 ---
 
