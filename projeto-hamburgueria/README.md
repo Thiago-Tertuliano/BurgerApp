@@ -328,34 +328,11 @@ VITE_API_URL=http://localhost:8080/api
 - Escreva testes quando possível
 - Documente mudanças importantes
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
 ## 👥 Autores
 
-- **Desenvolvedor**: [Seu Nome]
-- **Data**: 2024
+- **Desenvolvedor**: Thiago Matos Tertuliano
+- **Data**: Julho 2025
 - **Versão**: 1.0.0
-
----
-
-## 🎯 Próximos Passos
-
-### Melhorias Planejadas
-- [ ] Sistema de autenticação
-- [ ] Histórico de pedidos
-- [ ] Relatórios e analytics
-- [ ] PWA (Progressive Web App)
-- [ ] Testes automatizados
-- [ ] Internacionalização (i18n)
-
-### Recursos Técnicos
-- [ ] TypeScript
-- [ ] Pinia (gerenciamento de estado)
-- [ ] Vue Router
-- [ ] Testes com Vitest
-- [ ] CI/CD pipeline
 
 ---
 
