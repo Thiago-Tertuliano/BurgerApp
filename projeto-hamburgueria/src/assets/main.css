@@ -1,0 +1,48 @@
+/* Importa estilos base e tema */
+@import './base.css';
+@import './outback-theme.css';
+
+/* Container principal da aplicação */
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-weight: normal;
+}
+
+/* Conteúdo principal com animação de entrada */
+.main-content {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Melhorias para o tema Outback */
+.outback-container {
+  background: rgba(255, 248, 220, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: var(--outback-border-radius-large);
+  border: var(--outback-border);
+  margin: 1rem 0;
+  padding: 2rem;
+}
+
+/* Efeitos de hover melhorados */
+.outback-hover {
+  transition: all 0.3s ease;
+}
+
+.outback-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--outback-shadow-heavy);
+}
+
+/* Responsividade melhorada para dispositivos móveis */
+@media (max-width: 768px) {
+  #app {
+    padding: 0.5rem;
+  }
+  
+  .outback-container {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+}

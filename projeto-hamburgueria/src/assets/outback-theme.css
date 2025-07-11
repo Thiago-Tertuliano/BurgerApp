@@ -1,0 +1,167 @@
+/* Importa fonte Inter do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variáveis CSS para o tema Outback */
+/* Define paleta de cores moderna e elegante */
+:root {
+  /* Cores primárias */
+  --primary-dark: #1a1a1a;
+  --primary-light: #ffffff;
+  
+  /* Cores de destaque (accent) */
+  --accent-orange: #ff6b35;
+  --accent-orange-dark: #e55a2b;
+  --accent-gold: #f7931e;
+  --accent-green: #10b981;
+  --accent-green-dark: #059669;
+  --accent-blue: #3b82f6;
+  --accent-blue-dark: #2563eb;
+  
+  /* Cores de texto */
+  --text-dark: #2d2d2d;
+  --text-light: #6b7280;
+  
+  /* Cores de fundo */
+  --bg-light: #fafafa;
+  --bg-white: #ffffff;
+  
+  /* Cores de borda */
+  --border-light: #e5e7eb;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Bordas arredondadas */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* Reset CSS básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos base do body */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Componentes base reutilizáveis */
+/* Card moderno */
+.modern-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+}
+
+.modern-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Botão moderno */
+.modern-button {
+  background: var(--accent-orange);
+  color: var(--primary-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modern-button:hover {
+  background: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.modern-button:active {
+  transform: translateY(0);
+}
+
+/* Tipografia moderna */
+.modern-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.025em;
+}
+
+.modern-text {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* Gradientes modernos */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-gold) 100%);
+}
+
+.gradient-light {
+  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+}
+
+/* Animações CSS */
+/* Animação de entrada de baixo para cima */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animação de entrada da esquerda para direita */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Classes utilitárias para animações */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .modern-card {
+    border-radius: var(--radius-sm);
+  }
+  
+  .modern-button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
