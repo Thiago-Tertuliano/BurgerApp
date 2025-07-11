@@ -444,10 +444,6 @@ JWT_SECRET=seu_jwt_secret_aqui
 - [Gin Framework](https://gin-gonic.com/) - Framework web
 - [PostgreSQL](https://www.postgresql.org/docs/) - Banco de dados
 
-### CSS e Design
-- [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-- [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-- [Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 
 ## 🤝 Contribuição
 
@@ -465,41 +461,12 @@ JWT_SECRET=seu_jwt_secret_aqui
 - Escreva testes quando possível
 - Documente mudanças importantes
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ## 👥 Autores
 
-- **Desenvolvedor**: [Seu Nome]
-- **Data**: 2024
+- **Desenvolvedor**: Thiago Matos Tertuliano
+- **Data**: Julho 2025
 - **Versão**: 1.0.0
-
----
-
-## 🎯 Próximos Passos
-
-### Melhorias Planejadas
-- [ ] Sistema de autenticação JWT
-- [ ] Histórico de pedidos
-- [ ] Relatórios e analytics
-- [ ] PWA (Progressive Web App)
-- [ ] Testes automatizados
-- [ ] Internacionalização (i18n)
-- [ ] Cache com Redis
-- [ ] Rate limiting
-- [ ] Documentação Swagger
-
-### Recursos Técnicos
-- [ ] TypeScript (frontend)
-- [ ] Pinia (gerenciamento de estado)
-- [ ] Vue Router
-- [ ] Testes com Vitest
-- [ ] CI/CD pipeline
-- [ ] Migrations com golang-migrate
-- [ ] Validação com go-playground/validator
-- [ ] Logging estruturado
-- [ ] Métricas com Prometheus
 
 ---
 
