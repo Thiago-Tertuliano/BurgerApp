@@ -1,33 +1,19 @@
 {
-  // Nome do projeto - identifica o projeto no npm
   "name": "projeto-hamburgueria",
-  // Versão do projeto - segue semântica semver
   "version": "0.0.0",
-  // Indica que é um projeto privado (não será publicado no npm)
   "private": true,
-  // Define que o projeto usa módulos ES6 (import/export)
   "type": "module",
-  // Scripts npm - comandos que podem ser executados
   "scripts": {
-    // Comando para desenvolvimento - inicia servidor de desenvolvimento
     "dev": "vite",
-    // Comando para build de produção - gera arquivos otimizados
     "build": "vite build",
-    // Comando para preview do build - serve os arquivos de produção localmente
     "preview": "vite preview"
   },
-  // Dependências de produção - necessárias para o app funcionar
   "dependencies": {
-    // Framework Vue.js versão 3 - reatividade e componentes
     "vue": "^3.5.17"
   },
-  // Dependências de desenvolvimento - apenas para desenvolvimento
   "devDependencies": {
-    // Plugin do Vite para Vue.js - permite usar .vue files
     "@vitejs/plugin-vue": "^6.0.0",
-    // Bundler e dev server - ferramenta de build moderna
     "vite": "^7.0.0",
-    // Plugin para Vue DevTools - ferramentas de debug
     "vite-plugin-vue-devtools": "^7.7.7"
   }
 }
