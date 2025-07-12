@@ -8,7 +8,7 @@ Sistema completo de pedidos para hamburgueria desenvolvido com **frontend em Vue
 
 ```
 ┌─────────────────┐    HTTP/JSON    ┌─────────────────┐
-│   Frontend      │ ◄──────────────► │    Backend      │
+│   Frontend      │ ◄──────────────►│    Backend      │
 │   Vue.js 3      │                 │   Go + Gin      │
 │   (Porta 5173)  │                 │  (Porta 8080)   │
 └─────────────────┘                 └─────────────────┘
@@ -80,20 +80,14 @@ Projeto/
 
 ### 1. **Cardápio Interativo**
 - Visualização de produtos por categoria
-- Filtros dinâmicos
-- Cards com imagens e preços
-- Interface responsiva
+- Cards com imagens 
 
 ### 2. **Montador de Lanches Personalizados**
 - Seleção de ingredientes por categoria
-- Cálculo automático de preços
-- Validação de ingredientes obrigatórios
 - Interface intuitiva
 
 ### 3. **Sistema de Pedidos**
-- Adição de produtos ao carrinho
 - Envio automático para o backend
-- Contador de pedidos ativos
 - Sincronização em tempo real
 
 ### 4. **Interface da Cozinha**
@@ -101,12 +95,9 @@ Projeto/
 - Lista de pedidos em tempo real
 - Controle de status (preparando → pronto → entregue)
 - Barra de progresso visual
-- Atualização automática a cada 10 segundos
 
 ### 5. **Persistência Completa**
 - Banco de dados PostgreSQL
-- Transações seguras
-- Histórico de pedidos
 - Dados não se perdem ao recarregar
 
 ## 🔧 Configuração e Instalação
@@ -115,7 +106,6 @@ Projeto/
 - **Node.js 16+** (para frontend)
 - **Go 1.23+** (para backend)
 - **PostgreSQL 12+** (banco de dados)
-- **Git** (controle de versão)
 
 ### Instalação Completa
 
@@ -188,7 +178,7 @@ go build             # Compilar para produção
 ### Scripts Disponíveis
 
 #### Frontend
-- `npm run dev` - Servidor de desenvolvimento com hot reload
+- `npm run dev` - Servidor de desenvolvimento 
 - `npm run build` - Build otimizado para produção
 - `npm run preview` - Preview do build de produção
 
@@ -287,17 +277,12 @@ GET /health  # Verificar status do servidor
 Frontend → Backend API → PostgreSQL → Dados → Frontend
 ```
 
-### 2. **Novo Pedido**
-```
-Frontend → Backend API → Transação SQL → PostgreSQL → Confirmação → Frontend
-```
-
-### 3. **Atualização de Status**
+### 2. **Atualização de Status**
 ```
 Cozinha → Backend API → UPDATE SQL → PostgreSQL → Confirmação → Cozinha
 ```
 
-### 4. **Sincronização Automática**
+### 3. **Sincronização Automática**
 ```
 Cozinha → Backend API (a cada 10s) → PostgreSQL → Atualização → Cozinha
 ```
@@ -316,23 +301,12 @@ Cozinha → Backend API (a cada 10s) → PostgreSQL → Atualização → Cozinh
 - **Pesos**: 400, 500, 600, 700
 - **Tamanhos**: 14px, 16px, 18px, 24px, 30px
 
-### Componentes
-- **Cards**: Bordas arredondadas, sombras suaves
-- **Botões**: Estados hover, transições suaves
-- **Formulários**: Validação visual, feedback imediato
-
 ## 📱 Responsividade
 
 ### Breakpoints
 - **Desktop**: > 768px
 - **Tablet**: 768px - 1024px
 - **Mobile**: < 768px
-
-### Adaptações Mobile
-- Layout em coluna única
-- Botões maiores para touch
-- Espaçamentos otimizados
-- Navegação simplificada
 
 ## 🔒 Segurança
 
@@ -364,13 +338,6 @@ Cozinha → Backend API (a cada 10s) → PostgreSQL → Atualização → Cozinh
 - **JSON Tags** - Serialização automática
 - **SQL Prepared Statements** - Prevenção de SQL injection
 
-### Boas Práticas
-- Código limpo e bem documentado
-- Separação de responsabilidades
-- Reutilização de código
-- Comentários explicativos
-- Responsividade mobile-first
-
 ## 🚀 Deploy
 
 ### Frontend
@@ -387,7 +354,7 @@ go build -o backend-hamburgueria
 # Binário executável gerado
 ```
 
-### Docker (Opcional)
+### Docker 
 ```dockerfile
 # Frontend
 FROM node:16-alpine
@@ -444,10 +411,6 @@ JWT_SECRET=seu_jwt_secret_aqui
 - [Gin Framework](https://gin-gonic.com/) - Framework web
 - [PostgreSQL](https://www.postgresql.org/docs/) - Banco de dados
 
-### CSS e Design
-- [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-- [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-- [Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 
 ## 🤝 Contribuição
 
@@ -465,41 +428,12 @@ JWT_SECRET=seu_jwt_secret_aqui
 - Escreva testes quando possível
 - Documente mudanças importantes
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ## 👥 Autores
 
-- **Desenvolvedor**: [Seu Nome]
-- **Data**: 2024
+- **Desenvolvedor**: Thiago Matos Tertuliano
+- **Data**: Julho 2025
 - **Versão**: 1.0.0
-
----
-
-## 🎯 Próximos Passos
-
-### Melhorias Planejadas
-- [ ] Sistema de autenticação JWT
-- [ ] Histórico de pedidos
-- [ ] Relatórios e analytics
-- [ ] PWA (Progressive Web App)
-- [ ] Testes automatizados
-- [ ] Internacionalização (i18n)
-- [ ] Cache com Redis
-- [ ] Rate limiting
-- [ ] Documentação Swagger
-
-### Recursos Técnicos
-- [ ] TypeScript (frontend)
-- [ ] Pinia (gerenciamento de estado)
-- [ ] Vue Router
-- [ ] Testes com Vitest
-- [ ] CI/CD pipeline
-- [ ] Migrations com golang-migrate
-- [ ] Validação com go-playground/validator
-- [ ] Logging estruturado
-- [ ] Métricas com Prometheus
 
 ---
 
