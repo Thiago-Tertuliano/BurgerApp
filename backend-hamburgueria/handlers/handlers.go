@@ -13,11 +13,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// DBInterface define a interface para operações de banco de dados
+// Isso permite que os testes usem mocks
+type DBInterface interface {
+	Query(query string, args ...interface{}) (*sql.Rows, error)
+	QueryRow(query string, args ...interface{}) *sql.Row
+	Exec(query string, args ...interface{}) (sql.Result, error)
+	Begin() (*sql.Tx, error)
+}
+
 // ===== HANDLERS DE PRODUTOS E CATEGORIAS =====
 
 // GetProducts retorna todos os produtos disponíveis
 // Endpoint: GET /api/products
-func GetProducts(c *gin.Context, db *sql.DB) {
+func GetProducts(c *gin.Context, db DBInterface) {
 	// Query SQL com JOIN para buscar produtos e suas categorias
 	query := `
 		SELECT p.id, p.name, p.description, p.price, p.category_id, p.image_url, p.is_available, p.created_at,
@@ -61,7 +70,7 @@ func GetProducts(c *gin.Context, db *sql.DB) {
 
 // GetCategories retorna todas as categorias
 // Endpoint: GET /api/categories
-func GetCategories(c *gin.Context, db *sql.DB) {
+func GetCategories(c *gin.Context, db DBInterface) {
 	// Query SQL para buscar categorias ordenadas por nome
 	query := `SELECT id, name, description, created_at FROM categories ORDER BY name`
 
@@ -92,7 +101,7 @@ func GetCategories(c *gin.Context, db *sql.DB) {
 
 // GetIngredients retorna todos os ingredientes
 // Endpoint: GET /api/ingredients
-func GetIngredients(c *gin.Context, db *sql.DB) {
+func GetIngredients(c *gin.Context, db DBInterface) {
 	// Query SQL para buscar ingredientes disponíveis ordenados por categoria e nome
 	query := `SELECT id, name, price, category, is_available, created_at FROM ingredients WHERE is_available = true ORDER BY category, name`
 
@@ -125,7 +134,7 @@ func GetIngredients(c *gin.Context, db *sql.DB) {
 
 // CreateOrder cria um novo pedido
 // Endpoint: POST /api/orders
-func CreateOrder(c *gin.Context, db *sql.DB) {
+func CreateOrder(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR DADOS DE ENTRADA =====
 	var req models.CreateOrderRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -229,7 +238,7 @@ func CreateOrder(c *gin.Context, db *sql.DB) {
 // GetOrders retorna todos os pedidos
 // Endpoint: GET /api/orders
 // Suporta filtro por status: GET /api/orders?status=preparing
-func GetOrders(c *gin.Context, db *sql.DB) {
+func GetOrders(c *gin.Context, db DBInterface) {
 	// Obter parâmetro de status da query string
 	status := c.Query("status")
 
@@ -273,7 +282,7 @@ func GetOrders(c *gin.Context, db *sql.DB) {
 
 // UpdateOrderStatus atualiza o status de um pedido
 // Endpoint: PUT /api/orders/:id/status
-func UpdateOrderStatus(c *gin.Context, db *sql.DB) {
+func UpdateOrderStatus(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR ID DO PEDIDO =====
 	orderID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -317,7 +326,7 @@ func UpdateOrderStatus(c *gin.Context, db *sql.DB) {
 
 // GetOrderDetails retorna os detalhes de um pedido específico
 // Endpoint: GET /api/orders/:id
-func GetOrderDetails(c *gin.Context, db *sql.DB) {
+func GetOrderDetails(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR ID DO PEDIDO =====
 	orderID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
