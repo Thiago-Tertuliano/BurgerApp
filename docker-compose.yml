@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: burgerapp-postgres
+    environment:
+      POSTGRES_DB: hamburgueria
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend-hamburgueria/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - burgerapp-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hamburgueria"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend da aplicação
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend-build
+    container_name: burgerapp-backend
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=hamburgueria
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - burgerapp-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend da aplicação
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend-build
+    container_name: burgerapp-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080/api
+    depends_on:
+      - backend
+    networks:
+      - burgerapp-network
+    command: npm run dev -- --host 0.0.0.0
+
+  # Nginx para produção (opcional)
+  nginx:
+    image: nginx:alpine
+    container_name: burgerapp-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - burgerapp-network
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  burgerapp-network:
+    driver: bridge

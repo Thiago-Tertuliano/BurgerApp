@@ -1,5 +1,12 @@
 # 🍔 BurgerApp - Sistema Completo de Pedidos
 
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.5.17-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Go](https://img.shields.io/badge/Go-1.23-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-Pending-orange?style=for-the-badge)](tests)
+[![Deploy](https://img.shields.io/badge/Deploy-Ready-brightgreen?style=for-the-badge)](deploy)
+
 ## 📋 Descrição
 
 Sistema completo de pedidos para hamburgueria desenvolvido com **frontend em Vue.js 3** e **backend em Go**. O projeto permite visualizar o cardápio, montar lanches personalizados e gerenciar pedidos em tempo real através de uma interface moderna e responsiva, com persistência completa em banco de dados PostgreSQL.
