@@ -2,19 +2,21 @@
 
 ## Configuração de Segurança
 
-### GitHub Actions Security Workflow
+### GitHub Actions Security Workflows
 
-O projeto possui um workflow dedicado para segurança (`security.yml`) que executa:
+O projeto possui workflows dedicados para segurança:
 
-1. **Scan de Vulnerabilidades** (Trivy)
-   - Scan do sistema de arquivos
-   - Foco em vulnerabilidades CRÍTICAS, ALTAS e MÉDIAS
-   - Execução em push, pull request e diariamente
+#### 1. **Security Scan (Principal)** (`security.yml`)
+- Scan completo do sistema de arquivos
+- Análise de dependências Node.js e Go
+- Foco em vulnerabilidades CRÍTICAS, ALTAS e MÉDIAS
+- Execução em push, pull request e diariamente
 
-2. **Scan de Dependências** (Trivy)
-   - Análise de dependências Node.js
-   - Análise de dependências Go
-   - Detecção de vulnerabilidades conhecidas
+#### 2. **Security Scan (Simplificado)** (`security-simple.yml`)
+- Scan único do sistema de arquivos
+- Configuração mais robusta com verificações de erro
+- Melhor tratamento de falhas
+- Execução em push, pull request e diariamente
 
 ### Permissões Configuradas
 
@@ -38,6 +40,24 @@ permissions:
 1. Adicionar permissões explícitas no workflow
 2. Garantir que `security-events: write` está configurado
 3. Verificar se não é um fork (forks têm limitações de segurança)
+
+#### Erro: "unknown command 'dep' for 'trivy'"
+
+**Causa**: O comando `dep` não existe no Trivy. O comando correto é `fs` (filesystem).
+
+**Solução**: 
+1. Usar `scan-type: 'fs'` em vez de `scan-type: 'dep'`
+2. O Trivy automaticamente detecta dependências no filesystem
+3. Configurar severidade adequada: `severity: 'CRITICAL,HIGH,MEDIUM'`
+
+#### Erro: "Path does not exist: trivy-results.sarif"
+
+**Causa**: O arquivo SARIF não foi gerado devido a falha no scan.
+
+**Solução**: 
+1. Adicionar verificações de existência do arquivo
+2. Usar condicionais `if: always() && steps.check-scan.outputs.exists == 'true'`
+3. Implementar logs detalhados para debug
 
 #### Configuração Recomendada
 
