@@ -2,12 +2,12 @@
   <!-- Container principal do menu -->
   <div class="menu">
     <h2 class="menu-title">🍔 Cardápio</h2>
-    
+
     <!-- Categorias de produtos - botões para filtrar produtos -->
     <div class="categories">
       <!-- Botões das categorias normais (excluindo 'Ingredientes') -->
-      <button 
-        v-for="category in categories.filter(c => c.name !== 'Ingredientes')" 
+      <button
+        v-for="category in categories.filter((c) => c.name !== 'Ingredientes')"
         :key="category.id"
         :class="['category-btn', { active: selectedCategory === category.id }]"
         @click="selectedCategory = category.id"
@@ -15,30 +15,30 @@
         {{ category.name }}
       </button>
       <!-- Botão especial para montar lanche personalizado -->
-      <button 
+      <button
         :class="['category-btn', { active: selectedCategory === 'custom' }]"
         @click="selectedCategory = 'custom'"
       >
         🎯 Monte seu Lanche
       </button>
     </div>
-    
+
     <!-- Seção de Montar Lanche - só aparece quando 'custom' está selecionado -->
     <div v-if="selectedCategory === 'custom'" class="custom-burger-section">
       <CustomBurger @add-to-cart="addCustomBurger" />
     </div>
-    
+
     <!-- Grid de produtos normais - só aparece quando categoria normal está selecionada -->
     <div v-else class="products-grid">
       <!-- Card de cada produto -->
-      <div 
-        v-for="product in filteredProducts" 
+      <div
+        v-for="product in filteredProducts"
         :key="product.id"
         class="product-card"
       >
         <!-- Imagem do produto -->
         <div class="product-image">
-          <img :src="product.image_url" :alt="product.name">
+          <img :src="product.image_url" :alt="product.name" />
         </div>
         <!-- Informações do produto -->
         <div class="product-info">
@@ -47,7 +47,7 @@
           <!-- Rodapé do card com preço e botão -->
           <div class="product-footer">
             <span class="product-price">R$ {{ product.price.toFixed(2) }}</span>
-            <button 
+            <button
               class="add-to-cart-btn"
               @click="$emit('add-to-cart', product)"
             >
@@ -62,58 +62,58 @@
 
 <script setup>
 // Importa funções reativas do Vue.js
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from "vue";
 // Importa componente para montar lanche personalizado
-import CustomBurger from './CustomBurger.vue'
+import CustomBurger from "./CustomBurger.vue";
 // Importa configuração da API
-import API_URL from '../api'
+import API_URL from "../api";
 
 // Define os eventos que o componente pode emitir
-const emit = defineEmits(['add-to-cart'])
+const emit = defineEmits(["add-to-cart"]);
 
 // ===== ESTADO REATIVO =====
 // Array reativo para armazenar categorias
-const categories = ref([])
+const categories = ref([]);
 // Array reativo para armazenar produtos
-const products = ref([])
+const products = ref([]);
 // Estado reativo para categoria selecionada
-const selectedCategory = ref(null)
+const selectedCategory = ref(null);
 
 // ===== HOOK DE CICLO DE VIDA =====
 // Buscar dados da API quando o componente é montado
 onMounted(async () => {
   try {
     // Buscar categorias da API
-    const resCat = await fetch(`${API_URL}/categories`)
-    categories.value = await resCat.json()
-    
+    const resCat = await fetch(`${API_URL}/categories`);
+    categories.value = await resCat.json();
+
     // Buscar produtos da API
-    const resProd = await fetch(`${API_URL}/products`)
-    products.value = await resProd.json()
-    
+    const resProd = await fetch(`${API_URL}/products`);
+    products.value = await resProd.json();
+
     // Selecionar a primeira categoria por padrão
     if (categories.value.length > 0) {
-      selectedCategory.value = categories.value[0].id
+      selectedCategory.value = categories.value[0].id;
     }
   } catch (error) {
-    console.error('Erro ao carregar dados:', error)
+    console.error("Erro ao carregar dados:", error);
   }
-})
+});
 
 // ===== COMPUTED PROPERTIES =====
 // Propriedade computada que filtra produtos pela categoria selecionada
 const filteredProducts = computed(() => {
-  return products.value.filter(p => p.category_id === selectedCategory.value)
-})
+  return products.value.filter((p) => p.category_id === selectedCategory.value);
+});
 
 // ===== FUNÇÕES =====
 // Função para adicionar lanche customizado ao carrinho
 const addCustomBurger = (customBurger) => {
   // Gera ID único para o lanche customizado
-  customBurger.id = 'custom-' + Date.now()
+  customBurger.id = "custom-" + Date.now();
   // Emite evento para o componente pai
-  emit('add-to-cart', customBurger)
-}
+  emit("add-to-cart", customBurger);
+};
 </script>
 
 <style scoped>
@@ -128,7 +128,7 @@ const addCustomBurger = (customBurger) => {
 
 /* Título do menu */
 .menu-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.875rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -154,13 +154,14 @@ const addCustomBurger = (customBurger) => {
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
 }
 
-.category-btn.active, .category-btn:hover {
+.category-btn.active,
+.category-btn:hover {
   background: var(--accent-orange);
   color: var(--primary-light);
   border-color: var(--accent-orange);
@@ -217,7 +218,7 @@ const addCustomBurger = (customBurger) => {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-dark);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .product-description {
@@ -239,7 +240,7 @@ const addCustomBurger = (customBurger) => {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent-orange);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .add-to-cart-btn {
@@ -248,7 +249,7 @@ const addCustomBurger = (customBurger) => {
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-sm);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -265,20 +266,20 @@ const addCustomBurger = (customBurger) => {
   .menu {
     padding: 1rem;
   }
-  
+
   .categories {
     gap: 0.5rem;
   }
-  
+
   .category-btn {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
-  
+
   .products-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .product-footer {
     flex-direction: column;
     gap: 0.5rem;

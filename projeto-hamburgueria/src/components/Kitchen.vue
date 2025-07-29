@@ -8,7 +8,7 @@
         <h2>👨‍🍳 Cozinha</h2>
         <button class="close-btn" @click="handleClose" type="button">✕</button>
       </div>
-      
+
       <!-- Conteúdo da cozinha -->
       <div class="kitchen-content">
         <!-- Estado vazio - quando não há pedidos -->
@@ -17,7 +17,7 @@
           <p>Nenhum pedido em preparo</p>
           <p>Os pedidos aparecerão aqui quando forem feitos!</p>
         </div>
-        
+
         <!-- Lista de pedidos -->
         <div v-else class="orders-list">
           <!-- Card de cada pedido -->
@@ -27,39 +27,46 @@
               <h3>{{ order.name }}</h3>
               <span class="order-time">{{ order.time }}</span>
             </div>
-            
+
             <!-- Descrição do pedido -->
             <div class="order-description">
               {{ order.description }}
             </div>
-            
+
             <!-- Status do pedido -->
             <div class="order-status">
               <!-- Indicador de status com ícone e texto -->
               <div class="status-indicator" :class="order.status">
-                <span class="status-icon">{{ getStatusIcon(order.status) }}</span>
-                <span class="status-text">{{ getStatusText(order.status) }}</span>
+                <span class="status-icon">{{
+                  getStatusIcon(order.status)
+                }}</span>
+                <span class="status-text">{{
+                  getStatusText(order.status)
+                }}</span>
               </div>
-              
+
               <!-- Barra de progresso -->
               <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: getProgressWidth(order.status) }"></div>
+                <div
+                  class="progress-fill"
+                  :style="{ width: getProgressWidth(order.status) }"
+                ></div>
               </div>
             </div>
-            
+
             <!-- Ações do pedido -->
             <div class="order-actions">
               <!-- Botão para marcar como pronto - só aparece se status é 'preparando' -->
-              <button 
-                v-if="order.status === 'preparando'" 
+              <button
+                v-if="order.status === 'preparando'"
                 class="action-btn ready-btn"
                 @click="markAsReady(order.id)"
               >
                 Marcar como Pronto
               </button>
               <!-- Botão para entregar - só aparece se status é 'pronto' -->
-              <button 
-                v-if="order.status === 'pronto'" 
+              <button
+                v-if="order.status === 'pronto'"
                 class="action-btn delivered-btn"
                 @click="markAsDelivered(order.id)"
               >
@@ -75,66 +82,66 @@
 
 <script setup>
 // Importa funções reativas do Vue.js
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from "vue";
 // Importa configuração da API
-import API_URL from '../api'
+import API_URL from "../api";
 
 // ===== PROPS =====
 // Define as props que o componente recebe do componente pai
-const props = defineProps({
+defineProps({
   // Array de pedidos
   orders: {
     type: Array,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 
 // ===== EMITS =====
 // Define os eventos que o componente pode emitir
-const emit = defineEmits(['close', 'update-order'])
+const emit = defineEmits(["close", "update-order"]);
 
 // ===== FUNÇÕES DE CONTROLE =====
 // Função para fechar a cozinha
 function handleClose() {
-  console.log('Botão de fechar clicado')
-  emit('close')
+  console.log("Botão de fechar clicado");
+  emit("close");
 }
 
 // Função para fechar ao clicar no overlay
 function handleOverlayClick() {
-  console.log('Overlay clicado')
-  emit('close')
+  console.log("Overlay clicado");
+  emit("close");
 }
 
 // ===== FUNÇÕES DE STATUS =====
 // Função para obter ícone baseado no status
 function getStatusIcon(status) {
   const icons = {
-    'preparando': '👨‍🍳',
-    'pronto': '✅',
-    'entregue': '🛵'
-  }
-  return icons[status] || '⏳'
+    preparando: "👨‍🍳",
+    pronto: "✅",
+    entregue: "🛵",
+  };
+  return icons[status] || "⏳";
 }
 
 // Função para obter texto baseado no status
 function getStatusText(status) {
   const texts = {
-    'preparando': 'Preparando',
-    'pronto': 'Pronto para entrega',
-    'entregue': 'Entregue'
-  }
-  return texts[status] || 'Aguardando'
+    preparando: "Preparando",
+    pronto: "Pronto para entrega",
+    entregue: "Entregue",
+  };
+  return texts[status] || "Aguardando";
 }
 
 // Função para obter largura da barra de progresso baseada no status
 function getProgressWidth(status) {
   const progress = {
-    'preparando': '60%',
-    'pronto': '100%',
-    'entregue': '100%'
-  }
-  return progress[status] || '0%'
+    preparando: "60%",
+    pronto: "100%",
+    entregue: "100%",
+  };
+  return progress[status] || "0%";
 }
 
 // ===== FUNÇÕES DE ATUALIZAÇÃO =====
@@ -143,21 +150,21 @@ async function markAsReady(orderId) {
   try {
     // Atualizar status no backend
     const response = await fetch(`${API_URL}/orders/${orderId}/status`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: 'ready' })
-    })
+      body: JSON.stringify({ status: "ready" }),
+    });
 
     if (response.ok) {
       // Emitir evento para atualizar no componente pai
-      emit('update-order', { id: orderId, status: 'pronto' })
+      emit("update-order", { id: orderId, status: "pronto" });
     } else {
-      console.error('Erro ao marcar como pronto')
+      console.error("Erro ao marcar como pronto");
     }
   } catch (error) {
-    console.error('Erro ao atualizar status:', error)
+    console.error("Erro ao atualizar status:", error);
   }
 }
 
@@ -166,21 +173,21 @@ async function markAsDelivered(orderId) {
   try {
     // Atualizar status no backend
     const response = await fetch(`${API_URL}/orders/${orderId}/status`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: 'delivered' })
-    })
+      body: JSON.stringify({ status: "delivered" }),
+    });
 
     if (response.ok) {
       // Emitir evento para atualizar no componente pai
-      emit('update-order', { id: orderId, status: 'entregue' })
+      emit("update-order", { id: orderId, status: "entregue" });
     } else {
-      console.error('Erro ao marcar como entregue')
+      console.error("Erro ao marcar como entregue");
     }
   } catch (error) {
-    console.error('Erro ao atualizar status:', error)
+    console.error("Erro ao atualizar status:", error);
   }
 }
 
@@ -191,39 +198,39 @@ onMounted(() => {
   const updateOrders = async () => {
     try {
       // Buscar pedidos em preparo do backend
-      const response = await fetch(`${API_URL}/orders?status=preparing`)
+      const response = await fetch(`${API_URL}/orders?status=preparing`);
       if (response.ok) {
-        const backendOrders = await response.json()
+        const backendOrders = await response.json();
         // Converter formato do backend para o formato do frontend
-        const convertedOrders = backendOrders.map(order => ({
+        const convertedOrders = backendOrders.map((order) => ({
           id: order.id,
           name: `Pedido #${order.id}`,
           description: `Mesa ${order.table_number} - ${order.customer_name}`,
           price: order.total_amount,
           status: order.status,
-          time: new Date(order.created_at).toLocaleTimeString('pt-BR', { 
-            hour: '2-digit', 
-            minute: '2-digit' 
+          time: new Date(order.created_at).toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
           }),
-          createdAt: new Date(order.created_at)
-        }))
-        
+          createdAt: new Date(order.created_at),
+        }));
+
         // Emitir evento para atualizar pedidos no App.vue
-        emit('update-orders', convertedOrders)
+        emit("update-orders", convertedOrders);
       }
     } catch (error) {
-      console.error('Erro ao atualizar pedidos:', error)
+      console.error("Erro ao atualizar pedidos:", error);
     }
-  }
+  };
 
   // Atualizar a cada 10 segundos
-  const interval = setInterval(updateOrders, 10000)
-  
+  const interval = setInterval(updateOrders, 10000);
+
   // Limpar intervalo quando componente for desmontado
   onUnmounted(() => {
-    clearInterval(interval)
-  })
-})
+    clearInterval(interval);
+  });
+});
 </script>
 
 <style scoped>
@@ -269,7 +276,7 @@ onMounted(() => {
 }
 
 .kitchen-header h2 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
@@ -354,7 +361,7 @@ onMounted(() => {
 }
 
 .order-header h3 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-dark);
@@ -362,14 +369,14 @@ onMounted(() => {
 }
 
 .order-time {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 0.875rem;
   color: var(--text-light);
 }
 
 /* Descrição do pedido */
 .order-description {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 0.875rem;
   color: var(--text-light);
   margin-bottom: 1rem;
@@ -394,7 +401,7 @@ onMounted(() => {
 }
 
 .status-text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -439,7 +446,7 @@ onMounted(() => {
   padding: 0.75rem;
   border: none;
   border-radius: var(--radius-sm);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -481,13 +488,13 @@ onMounted(() => {
   .kitchen-sidebar {
     width: 100vw;
   }
-  
+
   .order-card {
     padding: 1rem;
   }
-  
+
   .order-actions {
     flex-direction: column;
   }
 }
-</style> 
+</style>

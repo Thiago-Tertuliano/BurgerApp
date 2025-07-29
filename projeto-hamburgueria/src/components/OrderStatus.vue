@@ -2,7 +2,12 @@
   <div class="order-status-card">
     <h2 class="status-title">Status do Pedido</h2>
     <div class="status-steps">
-      <div v-for="(step, idx) in steps" :key="step.id" class="status-step" :class="{active: idx <= currentStep}">
+      <div
+        v-for="(step, idx) in steps"
+        :key="step.id"
+        class="status-step"
+        :class="{ active: idx <= currentStep }"
+      >
         <div class="step-icon">{{ step.icon }}</div>
         <div class="step-label">{{ step.label }}</div>
       </div>
@@ -11,7 +16,11 @@
       <span>{{ steps[currentStep].message }}</span>
     </div>
     <div class="status-actions">
-      <button v-if="currentStep < steps.length - 1" class="modern-button" @click="nextStep">
+      <button
+        v-if="currentStep < steps.length - 1"
+        class="modern-button"
+        @click="nextStep"
+      >
         Avançar
       </button>
     </div>
@@ -19,15 +28,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 const steps = [
-  { id: 'preparando', label: 'Preparando', icon: '👨‍🍳', message: 'Seu pedido está sendo preparado!' },
-  { id: 'pronto', label: 'Pronto', icon: '✅', message: 'Seu pedido está pronto para retirada!' },
-  { id: 'entregue', label: 'Entregue', icon: '🛵', message: 'Pedido entregue! Bom apetite!' }
-]
-const currentStep = ref(0)
+  {
+    id: "preparando",
+    label: "Preparando",
+    icon: "👨‍🍳",
+    message: "Seu pedido está sendo preparado!",
+  },
+  {
+    id: "pronto",
+    label: "Pronto",
+    icon: "✅",
+    message: "Seu pedido está pronto para retirada!",
+  },
+  {
+    id: "entregue",
+    label: "Entregue",
+    icon: "🛵",
+    message: "Pedido entregue! Bom apetite!",
+  },
+];
+const currentStep = ref(0);
 function nextStep() {
-  if (currentStep.value < steps.length - 1) currentStep.value++
+  if (currentStep.value < steps.length - 1) currentStep.value++;
 }
 </script>
 
@@ -44,7 +68,7 @@ function nextStep() {
 }
 
 .status-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-dark);
@@ -59,7 +83,7 @@ function nextStep() {
 }
 
 .status-steps::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 1.5rem;
   left: 0;
@@ -104,14 +128,14 @@ function nextStep() {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-dark);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .status-message {
   font-size: 1.125rem;
   color: var(--text-dark);
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 500;
 }
 
@@ -124,14 +148,14 @@ function nextStep() {
     padding: 1.5rem;
     margin: 1rem;
   }
-  
+
   .status-steps {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .status-steps::before {
     display: none;
   }
 }
-</style> 
+</style>

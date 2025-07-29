@@ -10,7 +10,7 @@
           <p>Os melhores hambúrgueres da cidade</p>
         </div>
       </div>
-      
+
       <!-- Informações da cozinha e botão de acesso -->
       <div class="kitchen-info">
         <!-- Botão para abrir/fechar a cozinha -->
@@ -18,11 +18,13 @@
           <span class="kitchen-icon">👨‍🍳</span>
           <span class="kitchen-text">Cozinha</span>
           <!-- Badge com número de pedidos ativos -->
-          <span v-if="activeOrders > 0" class="orders-count">{{ activeOrders }}</span>
+          <span v-if="activeOrders > 0" class="orders-count">{{
+            activeOrders
+          }}</span>
         </button>
         <!-- Status da cozinha - mostra quantos pedidos estão em preparo -->
         <div v-if="activeOrders > 0" class="kitchen-status">
-          {{ activeOrders }} pedido{{ activeOrders > 1 ? 's' : '' }} em preparo
+          {{ activeOrders }} pedido{{ activeOrders > 1 ? "s" : "" }} em preparo
         </div>
       </div>
     </div>
@@ -35,12 +37,12 @@ defineProps({
   // Número de pedidos ativos (em preparo)
   activeOrders: {
     type: Number,
-    default: 0
-  }
-})
+    default: 0,
+  },
+});
 
 // Define os eventos que o componente pode emitir
-defineEmits(['toggle-kitchen'])
+defineEmits(["toggle-kitchen"]);
 </script>
 
 <style scoped>
@@ -71,11 +73,11 @@ defineEmits(['toggle-kitchen'])
 
 .logo-icon {
   font-size: 2.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .logo-text h1 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.875rem;
   font-weight: 700;
   color: var(--text-dark);
@@ -107,7 +109,7 @@ defineEmits(['toggle-kitchen'])
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   transition: all 0.2s ease;
   position: relative;
   display: flex;
@@ -144,7 +146,7 @@ defineEmits(['toggle-kitchen'])
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-light);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* Responsividade para dispositivos móveis */
@@ -154,19 +156,19 @@ defineEmits(['toggle-kitchen'])
     gap: 1rem;
     text-align: center;
   }
-  
+
   .logo {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .logo-text h1 {
     font-size: 1.5rem;
   }
-  
+
   .kitchen-button {
     padding: 0.6rem 1.2rem;
     font-size: 0.8rem;
   }
 }
-</style> 
+</style>
