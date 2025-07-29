@@ -23,7 +23,6 @@ require (
 	golang.org/x/crypto v0.39.0
 	// Dependências para testes
 	github.com/stretchr/testify v1.8.4
-	github.com/gin-gonic/gin v1.10.1
 )
 
 // Dependências indiretas - pacotes que as dependências diretas precisam
