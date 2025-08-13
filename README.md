@@ -83,6 +83,21 @@ Projeto/
 └── README.md                      # Este arquivo
 ```
 
+## 📑 Documentação da API (Swagger)
+
+A documentação interativa da API está disponível via Swagger.  
+Acesse pelo navegador:
+
+- **Swagger UI:** [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
+
+Com o Swagger, você pode:
+- Visualizar todos os endpoints disponíveis
+- Testar requisições diretamente pelo navegador
+- Conferir exemplos de payloads e respostas
+
+> **Obs:** Certifique-se de que o backend está rodando para acessar o Swagger.
+
+
 ## 🎯 Funcionalidades
 
 ### 1. **Cardápio Interativo**
