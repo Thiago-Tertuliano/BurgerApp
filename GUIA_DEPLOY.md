@@ -328,13 +328,12 @@ services:
 
 ### Contatos
 - **Desenvolvedor**: Thiago Matos Tertuliano
-- **Email**: [seu-email@exemplo.com]
-- **GitHub**: [https://github.com/seu-usuario/burgerapp]
+- **Email**: [thiagomatostertuliano@gmail.com]
+- **GitHub**: [https://github.com/thiago-tertuliano/burgerapp]
 
 ### Documentação Adicional
 - [README.md](./README.md) - Documentação geral do projeto
 - [API Documentation](./API.md) - Documentação da API
-- [Database Schema](./DATABASE.md) - Esquema do banco de dados
 
 ---
 

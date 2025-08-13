@@ -527,12 +527,4 @@ go tool cover -html=coverage.out -o coverage.html
 
 ---
 
-## 📖 Documentação Detalhada
-
-- **[Frontend README](./projeto-hamburgueria/README.md)** - Documentação completa do frontend
-- **[Backend README](./backend-hamburgueria/README.md)** - Documentação completa do backend
-- **[Estrutura do Banco](./backend-hamburgueria/ESTRUTURA_BANCO.md)** - Documentação do banco de dados
-
----
-
 **🍔 BurgerApp** - Sistema completo e moderno para transformar a experiência de pedidos de hambúrgueres! 
