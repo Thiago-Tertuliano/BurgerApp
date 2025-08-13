@@ -95,3 +95,10 @@ type OrderItemRequest struct {
 type UpdateOrderStatusRequest struct {
 	Status string `json:"status"` // Novo status: pending, preparing, ready, delivered
 }
+type StatusResponse struct {
+		Message string `json: "message"`
+}
+
+type ErrorResponse struct {
+		Error string `json: "error"`
+}

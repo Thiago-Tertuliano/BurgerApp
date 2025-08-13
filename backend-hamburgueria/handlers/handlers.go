@@ -22,10 +22,21 @@ type DBInterface interface {
 	Begin() (*sql.Tx, error)
 }
 
+
 // ===== HANDLERS DE PRODUTOS E CATEGORIAS =====
 
 // GetProducts retorna todos os produtos disponíveis
 // Endpoint: GET /api/products
+
+// Swagger comentários de documentação dos handlers
+
+// GetProducts godoc
+// @Summary    Lista todos os produtos
+// @Description Retorna todos os produtos disponíveis 
+// @Tags 	 Products
+// @Produce    json
+// @Success    200 {array} models.Product
+// @Router     /api/products [get]
 func GetProducts(c *gin.Context, db DBInterface) {
 	// Query SQL com JOIN para buscar produtos e suas categorias
 	query := `
@@ -70,6 +81,15 @@ func GetProducts(c *gin.Context, db DBInterface) {
 
 // GetCategories retorna todas as categorias
 // Endpoint: GET /api/categories
+
+
+// GetCategories godoc
+// @Summary Lista todas as categorias
+// @Description Retorna todas as categorias disponíveis
+// @Tags Categories
+// @Produce json
+// @Success 200 {array} models.Category
+// @Router /api/categories [get]
 func GetCategories(c *gin.Context, db DBInterface) {
 	// Query SQL para buscar categorias ordenadas por nome
 	query := `SELECT id, name, description, created_at FROM categories ORDER BY name`
@@ -101,6 +121,15 @@ func GetCategories(c *gin.Context, db DBInterface) {
 
 // GetIngredients retorna todos os ingredientes
 // Endpoint: GET /api/ingredients
+
+
+// GetIngredients godoc
+// @Summary Lista todos os ingredientes
+// @Description Retorna todos os ingredientes disponíveis
+// @Tags Ingredients
+// @Produce json
+// @Success 200 {array} models.Ingredient
+// @Router /api/ingredients [get]
 func GetIngredients(c *gin.Context, db DBInterface) {
 	// Query SQL para buscar ingredientes disponíveis ordenados por categoria e nome
 	query := `SELECT id, name, price, category, is_available, created_at FROM ingredients WHERE is_available = true ORDER BY category, name`
@@ -134,6 +163,15 @@ func GetIngredients(c *gin.Context, db DBInterface) {
 
 // CreateOrder cria um novo pedido
 // Endpoint: POST /api/orders
+
+
+// GetOrders godoc
+// @Summary Lista todos os pedidos
+// @Description Retorna todos os pedidos
+// @Tags Orders
+// @Produce json
+// @Success 200 {array} models.Order
+// @Router /api/orders [get]
 func CreateOrder(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR DADOS DE ENTRADA =====
 	var req models.CreateOrderRequest
@@ -238,6 +276,14 @@ func CreateOrder(c *gin.Context, db DBInterface) {
 // GetOrders retorna todos os pedidos
 // Endpoint: GET /api/orders
 // Suporta filtro por status: GET /api/orders?status=preparing
+
+// GetOrders godoc
+// @Summary Lista todos os pedidos
+// @Description Retorna todos os pedidos
+// @Tags Orders
+// @Produce json
+// @Success 200 {array} models.Order
+// @Router /api/orders [get]
 func GetOrders(c *gin.Context, db DBInterface) {
 	// Obter parâmetro de status da query string
 	status := c.Query("status")
@@ -282,6 +328,19 @@ func GetOrders(c *gin.Context, db DBInterface) {
 
 // UpdateOrderStatus atualiza o status de um pedido
 // Endpoint: PUT /api/orders/:id/status
+
+// UpdateOrderStatus godoc
+// @Summary      Atualiza o status de um pedido
+// @Description  Atualiza o status de um pedido específico
+// @Tags         Orders
+// @Accept       json
+// @Produce      json
+// @Param        id    path      int                              true  "ID do pedido"
+// @Param        body  body      models.UpdateOrderStatusRequest  true  "Novo status do pedido"
+// @Success      200   {object}  models.StatusResponse "Status atualizado com sucesso"
+// @Failure      400   {object}  models.ErrorResponse "Status inválido"
+// @Failure      500   {object}  models.ErrorResponse "Erro ao atualizar status"
+// @Router       /api/orders/{id}/status [put]
 func UpdateOrderStatus(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR ID DO PEDIDO =====
 	orderID, err := strconv.Atoi(c.Param("id"))
@@ -326,6 +385,17 @@ func UpdateOrderStatus(c *gin.Context, db DBInterface) {
 
 // GetOrderDetails retorna os detalhes de um pedido específico
 // Endpoint: GET /api/orders/:id
+
+// GetOrderDetails godoc
+// @Summary      Detalhes de um pedido
+// @Description  Retorna todos os detalhes de um pedido específico
+// @Tags         Orders
+// @Produce      json
+// @Param        id   path      int  true  "ID do pedido"
+// @Success      200  {object}  models.Order
+// @Failure      400  {object}  models.ErrorResponse "ID do pedido inválido"
+// @Failure      404  {object}  models.ErrorResponse "Pedido não encontrado"
+// @Router       /api/orders/{id} [get]
 func GetOrderDetails(c *gin.Context, db DBInterface) {
 	// ===== VALIDAR ID DO PEDIDO =====
 	orderID, err := strconv.Atoi(c.Param("id"))
@@ -380,4 +450,6 @@ func GetOrderDetails(c *gin.Context, db DBInterface) {
 
 	// Retornar pedido completo como JSON
 	c.JSON(http.StatusOK, order)
+
+	
 }

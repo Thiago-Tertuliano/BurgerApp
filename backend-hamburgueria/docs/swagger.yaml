@@ -1,0 +1,276 @@
+definitions:
+  models.Category:
+    properties:
+      created_at:
+        description: Data de criação
+        type: string
+      description:
+        description: Descrição da categoria
+        type: string
+      id:
+        description: ID único da categoria
+        type: integer
+      name:
+        description: Nome da categoria
+        type: string
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.Ingredient:
+    properties:
+      category:
+        description: 'Tipo: pão, carne, queijo, vegetais, molhos'
+        type: string
+      created_at:
+        description: Data de criação
+        type: string
+      id:
+        description: ID único do ingrediente
+        type: integer
+      is_available:
+        description: Se o ingrediente está disponível
+        type: boolean
+      name:
+        description: Nome do ingrediente
+        type: string
+      price:
+        description: Preço adicional do ingrediente
+        type: number
+    type: object
+  models.Order:
+    properties:
+      created_at:
+        description: Data de criação
+        type: string
+      customer_name:
+        description: Nome do cliente
+        type: string
+      id:
+        description: ID único do pedido
+        type: integer
+      items:
+        description: Itens do pedido (opcional)
+        items:
+          $ref: '#/definitions/models.OrderItem'
+        type: array
+      notes:
+        description: Observações do pedido
+        type: string
+      status:
+        description: 'Status: pending, preparing, ready, delivered'
+        type: string
+      table_number:
+        description: Número da mesa
+        type: integer
+      total_amount:
+        description: Valor total do pedido
+        type: number
+      updated_at:
+        description: Data de última atualização
+        type: string
+    type: object
+  models.OrderItem:
+    properties:
+      created_at:
+        description: Data de criação
+        type: string
+      id:
+        description: ID único do item
+        type: integer
+      ingredients:
+        description: JSON string com ingredientes customizados
+        type: string
+      notes:
+        description: Observações do item
+        type: string
+      order_id:
+        description: ID do pedido (FK)
+        type: integer
+      product:
+        allOf:
+        - $ref: '#/definitions/models.Product'
+        description: Produto completo (opcional)
+      product_id:
+        description: ID do produto (FK)
+        type: integer
+      quantity:
+        description: Quantidade do item
+        type: integer
+      total_price:
+        description: Preço total do item
+        type: number
+      unit_price:
+        description: Preço unitário
+        type: number
+    type: object
+  models.Product:
+    properties:
+      category:
+        allOf:
+        - $ref: '#/definitions/models.Category'
+        description: Categoria completa (opcional)
+      category_id:
+        description: ID da categoria (FK)
+        type: integer
+      created_at:
+        description: Data de criação
+        type: string
+      description:
+        description: Descrição do produto
+        type: string
+      id:
+        description: ID único do produto
+        type: integer
+      image_url:
+        description: URL da imagem do produto
+        type: string
+      is_available:
+        description: Se o produto está disponível
+        type: boolean
+      name:
+        description: Nome do produto
+        type: string
+      price:
+        description: Preço do produto
+        type: number
+    type: object
+  models.StatusResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.UpdateOrderStatusRequest:
+    properties:
+      status:
+        description: 'Novo status: pending, preparing, ready, delivered'
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/categories:
+    get:
+      description: Retorna todas as categorias disponíveis
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Category'
+            type: array
+      summary: Lista todas as categorias
+      tags:
+      - Categories
+  /api/ingredients:
+    get:
+      description: Retorna todos os ingredientes disponíveis
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Ingredient'
+            type: array
+      summary: Lista todos os ingredientes
+      tags:
+      - Ingredients
+  /api/orders:
+    get:
+      description: Retorna todos os pedidos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Order'
+            type: array
+      summary: Lista todos os pedidos
+      tags:
+      - Orders
+  /api/orders/{id}:
+    get:
+      description: Retorna todos os detalhes de um pedido específico
+      parameters:
+      - description: ID do pedido
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+        "400":
+          description: ID do pedido inválido
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Pedido não encontrado
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Detalhes de um pedido
+      tags:
+      - Orders
+  /api/orders/{id}/status:
+    put:
+      consumes:
+      - application/json
+      description: Atualiza o status de um pedido específico
+      parameters:
+      - description: ID do pedido
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Novo status do pedido
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateOrderStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Status atualizado com sucesso
+          schema:
+            $ref: '#/definitions/models.StatusResponse'
+        "400":
+          description: Status inválido
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Erro ao atualizar status
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Atualiza o status de um pedido
+      tags:
+      - Orders
+  /api/products:
+    get:
+      description: Retorna todos os produtos disponíveis
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Lista todos os produtos
+      tags:
+      - Products
+swagger: "2.0"

@@ -1,0 +1,409 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/categories": {
+            "get": {
+                "description": "Retorna todas as categorias disponíveis",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Lista todas as categorias",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Category"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ingredients": {
+            "get": {
+                "description": "Retorna todos os ingredientes disponíveis",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Lista todos os ingredientes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Ingredient"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders": {
+            "get": {
+                "description": "Retorna todos os pedidos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Lista todos os pedidos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Order"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}": {
+            "get": {
+                "description": "Retorna todos os detalhes de um pedido específico",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Detalhes de um pedido",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID do pedido",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Order"
+                        }
+                    },
+                    "400": {
+                        "description": "ID do pedido inválido",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{id}/status": {
+            "put": {
+                "description": "Atualiza o status de um pedido específico",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Atualiza o status de um pedido",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID do pedido",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Novo status do pedido",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateOrderStatusRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status atualizado com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/models.StatusResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status inválido",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao atualizar status",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "description": "Retorna todos os produtos disponíveis",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Lista todos os produtos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Product"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Category": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "Data de criação",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Descrição da categoria",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID único da categoria",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Nome da categoria",
+                    "type": "string"
+                }
+            }
+        },
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Ingredient": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "Tipo: pão, carne, queijo, vegetais, molhos",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Data de criação",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID único do ingrediente",
+                    "type": "integer"
+                },
+                "is_available": {
+                    "description": "Se o ingrediente está disponível",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Nome do ingrediente",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "Preço adicional do ingrediente",
+                    "type": "number"
+                }
+            }
+        },
+        "models.Order": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "Data de criação",
+                    "type": "string"
+                },
+                "customer_name": {
+                    "description": "Nome do cliente",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID único do pedido",
+                    "type": "integer"
+                },
+                "items": {
+                    "description": "Itens do pedido (opcional)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.OrderItem"
+                    }
+                },
+                "notes": {
+                    "description": "Observações do pedido",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status: pending, preparing, ready, delivered",
+                    "type": "string"
+                },
+                "table_number": {
+                    "description": "Número da mesa",
+                    "type": "integer"
+                },
+                "total_amount": {
+                    "description": "Valor total do pedido",
+                    "type": "number"
+                },
+                "updated_at": {
+                    "description": "Data de última atualização",
+                    "type": "string"
+                }
+            }
+        },
+        "models.OrderItem": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "Data de criação",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID único do item",
+                    "type": "integer"
+                },
+                "ingredients": {
+                    "description": "JSON string com ingredientes customizados",
+                    "type": "string"
+                },
+                "notes": {
+                    "description": "Observações do item",
+                    "type": "string"
+                },
+                "order_id": {
+                    "description": "ID do pedido (FK)",
+                    "type": "integer"
+                },
+                "product": {
+                    "description": "Produto completo (opcional)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    ]
+                },
+                "product_id": {
+                    "description": "ID do produto (FK)",
+                    "type": "integer"
+                },
+                "quantity": {
+                    "description": "Quantidade do item",
+                    "type": "integer"
+                },
+                "total_price": {
+                    "description": "Preço total do item",
+                    "type": "number"
+                },
+                "unit_price": {
+                    "description": "Preço unitário",
+                    "type": "number"
+                }
+            }
+        },
+        "models.Product": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "Categoria completa (opcional)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Category"
+                        }
+                    ]
+                },
+                "category_id": {
+                    "description": "ID da categoria (FK)",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "Data de criação",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Descrição do produto",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID único do produto",
+                    "type": "integer"
+                },
+                "image_url": {
+                    "description": "URL da imagem do produto",
+                    "type": "string"
+                },
+                "is_available": {
+                    "description": "Se o produto está disponível",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Nome do produto",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "Preço do produto",
+                    "type": "number"
+                }
+            }
+        },
+        "models.StatusResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateOrderStatusRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "description": "Novo status: pending, preparing, ready, delivered",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

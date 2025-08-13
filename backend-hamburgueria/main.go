@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 	// Biblioteca para carregar variáveis de ambiente do arquivo .env
 	"github.com/joho/godotenv"
+	// Swagger para documentação da API
+	_ "backend-hamburgueria/docs"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/files"
 	// Pacotes internos do projeto
 	"backend-hamburgueria/config"
 	"backend-hamburgueria/database"
@@ -23,6 +27,7 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Println("Arquivo .env não encontrado, usando variáveis de ambiente do sistema")
 	}
+	
 
 	// ===== CONEXÃO COM BANCO DE DADOS =====
 	// Estabelecer conexão com o PostgreSQL
@@ -50,6 +55,9 @@ func main() {
 	// Passa a instância do Gin e a conexão com o banco
 	routes.SetupRoutes(r, db)
 
+	// Rota para documentação Swagger
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	// ===== INICIALIZAÇÃO DO SERVIDOR =====
 	// Obter porta do ambiente ou usar 8080 como padrão
 	port := os.Getenv("PORT")
@@ -64,4 +72,6 @@ func main() {
 	if err := r.Run(":" + port); err != nil {
 		log.Fatal("Erro ao iniciar servidor:", err)
 	}
+
+   
 }
